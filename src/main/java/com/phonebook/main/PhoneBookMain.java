@@ -38,6 +38,9 @@ public class PhoneBookMain {
                     String name = line.substring(5);
                     Set<String> phones = phoneBook.findAllPhonesByName(name);
                     renderer.showPhones(phones);
+                } else if (line.startsWith("+")) {
+                    String name = phoneBook.findNameByPhone(line);
+                    renderer.showName(name);
                 }
             } catch (Exception e) {
                 renderer.error(e);

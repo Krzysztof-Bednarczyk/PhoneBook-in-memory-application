@@ -52,6 +52,10 @@ public class PhoneBook {
         return repository.findAllPhonesByName(name);
     }
 
+    public String findNameByPhone(String phone) {
+        return repository.findNameByPhone(phone);
+    }
+
     /**
      * TODO: please add required methods here
      */

@@ -45,7 +45,15 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
 
     @Override
     public String findNameByPhone(String phone) {
-        throw new UnsupportedOperationException("Implement it!");
+        Optional<Set<String>> phoneSet = new LinkedHashMap<>(this.data).values()
+                .stream()
+                .filter(phones -> phones.contains(phone)).
+                findFirst();
+        if (phoneSet.isPresent()) {
+            Optional<Map.Entry<String, Set<String>>> nameEntry = findAll().entrySet().stream().filter(entry -> entry.getValue().equals(phoneSet.get())).findFirst();
+            if (nameEntry.isPresent()) return nameEntry.get().getKey();
+        }
+        return "No phone like this in our phonebook";
     }
 
     @Override

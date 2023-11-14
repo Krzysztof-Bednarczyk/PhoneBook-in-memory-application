@@ -53,6 +53,10 @@ public class PhoneBookFormatter {
         phones.forEach(System.out::println);
     }
 
+    public void showName(String name){
+        System.out.println(name);
+    }
+
     /**
      * add {@code Level.INFO} message to stout
      *
