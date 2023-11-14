@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -39,7 +40,7 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
 
     @Override
     public Set<String> findAllPhonesByName(String name) {
-        throw new UnsupportedOperationException("Implement it!");
+        return new LinkedHashMap<>(this.data).get(name);
     }
 
     @Override

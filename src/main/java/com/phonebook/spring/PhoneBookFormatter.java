@@ -49,6 +49,10 @@ public class PhoneBookFormatter {
                 v = lowerCaseNames ? v.stream().map(e -> e.toLowerCase()).collect(Collectors.toSet()) : v))));
     }
 
+    public void showPhones(Set<String> phones){
+        phones.forEach(System.out::println);
+    }
+
     /**
      * add {@code Level.INFO} message to stout
      *

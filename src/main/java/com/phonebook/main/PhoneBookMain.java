@@ -31,8 +31,14 @@ public class PhoneBookMain {
                 break;
             }
             try {
-                // TODO: add your code here
-                throw new UnsupportedOperationException("Implement it!");
+                if ( line.equals("SHOW")){
+                    Map<String, Set<String>> data = phoneBook.findAll();
+                    renderer.show(data);
+                } else if (line.matches("SHOW\\s\\w+")) {
+                    String name = line.substring(5);
+                    Set<String> phones = phoneBook.findAllPhonesByName(name);
+                    renderer.showPhones(phones);
+                }
             } catch (Exception e) {
                 renderer.error(e);
             }

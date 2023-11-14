@@ -4,7 +4,9 @@ import com.phonebook.main.InMemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -44,6 +46,10 @@ public class PhoneBook {
      */
     public Map<String, Set<String>> findAll() {
         return repository.findAll();
+    }
+
+    public Set<String> findAllPhonesByName(String name){
+        return repository.findAllPhonesByName(name);
     }
 
     /**
