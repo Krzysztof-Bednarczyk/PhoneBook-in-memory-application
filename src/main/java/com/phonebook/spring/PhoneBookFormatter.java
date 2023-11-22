@@ -83,10 +83,10 @@ public class PhoneBookFormatter {
      */
     public void error(Throwable cause) {
         try {
-            if (cause.getMessage().contains("Incorrect Command!") ) {
+            if (cause.getMessage().contains("Incorrect Command!")) {
                 throw new IncorrectCommandException("Incorrect command! Please try again :)", cause);
             }
-            if (cause.getMessage().contains("phones") ) {
+            if (cause.getMessage().contains("phones")) {
                 throw new ContactNotFoundException("No contact like this in our phonebook!", cause);
             }
             if (cause.getMessage().contains("ERROR")) {
@@ -96,9 +96,14 @@ public class PhoneBookFormatter {
                 throw new PhoneIncorrectFormatException("You are trying to add a phone number in an incorrect format!", cause);
             }
             if (cause.getMessage().contains("Incorrect ADD command!")) {
-                throw new ContactWithoutPhoenException("You are trying to add a contact without a phone number!", cause);
+                throw new ContactWithoutPhoneException("You are trying to add a contact without a phone number!", cause);
+            }
+            if (cause.getMessage().contains("No more phone numbers!")) {
+                throw new ContactRemovedException("Phone number removed! No more phone numbers for this contact! Contact removed!", cause);
             }
 
+        } catch (ContactRemovedException e) {
+            info(e.getMessage());
         } catch (Exception e) {
             error(e.getMessage());
         }
