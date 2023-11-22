@@ -1,6 +1,6 @@
 package com.phonebook.spring;
 
-import com.phonebook.exception.PhoneNotFoundException;
+import com.phonebook.exception.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -83,7 +83,22 @@ public class PhoneBookFormatter {
      */
     public void error(Throwable cause) {
         try {
-            throw new PhoneNotFoundException("No phone like this in our phonebook!", cause);
+            if (cause.getMessage().contains("Incorrect Command!") ) {
+                throw new IncorrectCommandException("Incorrect command! Please try again :)", cause);
+            }
+            if (cause.getMessage().contains("phones") ) {
+                throw new ContactNotFoundException("No contact like this in our phonebook!", cause);
+            }
+            if (cause.getMessage().contains("ERROR")) {
+                throw new PhoneNotFoundException("No phone like this in our phonebook!", cause);
+            }
+            if (cause.getMessage().contains("Incorrect format!")) {
+                throw new PhoneIncorrectFormatException("You are trying to add a phone number in an incorrect format!", cause);
+            }
+            if (cause.getMessage().contains("Incorrect ADD command!")) {
+                throw new ContactWithoutPhoenException("You are trying to add a contact without a phone number!", cause);
+            }
+
         } catch (Exception e) {
             error(e.getMessage());
         }

@@ -1,5 +1,6 @@
 package com.phonebook.main;
 
+import com.phonebook.exception.IncorrectCommandException;
 import com.phonebook.spring.ApplicationConfig;
 import com.phonebook.spring.PhoneBook;
 import com.phonebook.spring.PhoneBookFormatter;
@@ -32,7 +33,7 @@ public class PhoneBookMain {
                 break;
             }
             try {
-                if ( line.equals("SHOW")){
+                if (line.equals("SHOW")) {
                     Map<String, Set<String>> data = phoneBook.findAll();
                     renderer.show(data);
                 } else if (line.matches("SHOW\\s\\w+")) {
@@ -45,11 +46,16 @@ public class PhoneBookMain {
                 } else if (line.startsWith("ADD")) {
                     String contactInfo = line.substring(4);
                     String[] contactInfoArgs = contactInfo.split(" |,");
-                    if (contactInfoArgs.length > 1) phoneBook.addContact(contactInfoArgs);
-                }else if (line.startsWith("REMOVE_PHONE")) {
+                    if (contactInfoArgs.length > 1) {
+                        phoneBook.addContact(contactInfoArgs);
+                        renderer.info("Contact added!");
+                    } else throw new RuntimeException("Incorrect ADD command! Forgot phone!");
+                } else if (line.startsWith("REMOVE_PHONE")) {
                     String phone = line.substring(13);
                     phoneBook.removePhone(phone);
                     renderer.info("Phone number removed!");
+                } else {
+                    throw new IncorrectCommandException("Incorrect Command!");
                 }
             } catch (Exception e) {
                 renderer.error(e);

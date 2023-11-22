@@ -46,7 +46,7 @@ public class PhoneBook {
         return repository.findAll();
     }
 
-    public Set<String> findAllPhonesByName(String name){
+    public Set<String> findAllPhonesByName(String name) {
         return repository.findAllPhonesByName(name);
     }
 
@@ -54,16 +54,16 @@ public class PhoneBook {
         return repository.findNameByPhone(phone);
     }
 
-    public void addContact(String[] contactInfo){
+    public void addContact(String[] contactInfo) {
         String name = contactInfo[0];
-        Set<String> phones = Arrays.stream(contactInfo).filter(x->x.contains("+")).collect(Collectors.toSet());
-        if (!phones.isEmpty()) {
-            repository.addPhone(name, phones);
-            System.out.println("Contact added!");
-        } else System.out.println("Phone numbers are in incorrect format");
+        Set<String> phones = Arrays.stream(contactInfo).filter(x -> x.contains("+")).collect(Collectors.toSet());
+        if (phones.isEmpty()) {
+            throw new RuntimeException("Incorrect format!");
+        }
+        repository.addPhone(name, phones);
     }
 
-    public void removePhone(String phone){
+    public void removePhone(String phone) {
         repository.removePhone(phone);
     }
 }
