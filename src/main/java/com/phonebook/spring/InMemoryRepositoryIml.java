@@ -3,6 +3,7 @@ package com.phonebook.spring;
 import com.phonebook.main.InMemoryRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.management.relation.RoleInfoNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -53,16 +54,18 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
             Optional<Map.Entry<String, Set<String>>> nameEntry = findAll().entrySet().stream().filter(entry -> entry.getValue().equals(phoneSet.get())).findFirst();
             if (nameEntry.isPresent()) return nameEntry.get().getKey();
         }
-        return "No phone like this in our phonebook";
+        throw new RuntimeException("ERROR!");
     }
 
     @Override
     public void addPhone(String name, Set<String> phones) {
-       this.data.put(name, phones);
+        this.data.put(name, phones);
     }
 
     @Override
-    public void removePhone(String phone) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Implement it!");
+    public void removePhone(String phone) {
+        String name = findNameByPhone(phone);
+        Set<String> phoneSet = this.data.get(name);
+        phoneSet.remove(phone);
     }
 }

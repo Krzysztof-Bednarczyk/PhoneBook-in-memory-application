@@ -63,7 +63,7 @@ public class PhoneBook {
         } else System.out.println("Phone numbers are in incorrect format");
     }
 
-    /**
-     * TODO: please add required methods here
-     */
+    public void removePhone(String phone){
+        repository.removePhone(phone);
+    }
 }

@@ -46,6 +46,10 @@ public class PhoneBookMain {
                     String contactInfo = line.substring(4);
                     String[] contactInfoArgs = contactInfo.split(" |,");
                     if (contactInfoArgs.length > 1) phoneBook.addContact(contactInfoArgs);
+                }else if (line.startsWith("REMOVE_PHONE")) {
+                    String phone = line.substring(13);
+                    phoneBook.removePhone(phone);
+                    renderer.info("Phone number removed!");
                 }
             } catch (Exception e) {
                 renderer.error(e);

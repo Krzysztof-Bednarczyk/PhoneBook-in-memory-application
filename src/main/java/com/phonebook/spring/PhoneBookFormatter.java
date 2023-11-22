@@ -1,5 +1,6 @@
 package com.phonebook.spring;
 
+import com.phonebook.exception.PhoneNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -49,11 +50,11 @@ public class PhoneBookFormatter {
                 v = lowerCaseNames ? v.stream().map(e -> e.toLowerCase()).collect(Collectors.toSet()) : v))));
     }
 
-    public void showPhones(Set<String> phones){
+    public void showPhones(Set<String> phones) {
         phones.forEach(System.out::println);
     }
 
-    public void showName(String name){
+    public void showName(String name) {
         System.out.println(name);
     }
 
@@ -81,8 +82,11 @@ public class PhoneBookFormatter {
      * @param cause of an error
      */
     public void error(Throwable cause) {
-        // TODO: add your code here
-        throw new UnsupportedOperationException("Implement it!");
+        try {
+            throw new PhoneNotFoundException("No phone like this in our phonebook!", cause);
+        } catch (Exception e) {
+            error(e.getMessage());
+        }
     }
 
     /*************************
