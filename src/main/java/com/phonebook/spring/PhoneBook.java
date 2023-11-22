@@ -4,10 +4,8 @@ import com.phonebook.main.InMemoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * PhoneBook service implementation
@@ -54,6 +52,15 @@ public class PhoneBook {
 
     public String findNameByPhone(String phone) {
         return repository.findNameByPhone(phone);
+    }
+
+    public void addContact(String[] contactInfo){
+        String name = contactInfo[0];
+        Set<String> phones = Arrays.stream(contactInfo).filter(x->x.contains("+")).collect(Collectors.toSet());
+        if (!phones.isEmpty()) {
+            repository.addPhone(name, phones);
+            System.out.println("Contact added!");
+        } else System.out.println("Phone numbers are in incorrect format");
     }
 
     /**

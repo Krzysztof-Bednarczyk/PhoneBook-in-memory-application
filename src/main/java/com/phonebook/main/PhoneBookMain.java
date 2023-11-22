@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -41,6 +42,10 @@ public class PhoneBookMain {
                 } else if (line.startsWith("+")) {
                     String name = phoneBook.findNameByPhone(line);
                     renderer.showName(name);
+                } else if (line.startsWith("ADD")) {
+                    String contactInfo = line.substring(4);
+                    String[] contactInfoArgs = contactInfo.split(" |,");
+                    if (contactInfoArgs.length > 1) phoneBook.addContact(contactInfoArgs);
                 }
             } catch (Exception e) {
                 renderer.error(e);

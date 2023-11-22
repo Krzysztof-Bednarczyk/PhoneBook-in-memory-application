@@ -57,8 +57,8 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
     }
 
     @Override
-    public void addPhone(String name, String phone) {
-        throw new UnsupportedOperationException("Implement it!");
+    public void addPhone(String name, Set<String> phones) {
+       this.data.put(name, phones);
     }
 
     @Override
