@@ -1,10 +1,12 @@
 package com.phonebook.spring;
 
+import com.phonebook.exception.PhoneIncorrectFormatException;
 import com.phonebook.main.InMemoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +60,7 @@ public class PhoneBook {
         String name = contactInfo[0];
         Set<String> phones = Arrays.stream(contactInfo).filter(x -> x.contains("+")).collect(Collectors.toSet());
         if (phones.isEmpty()) {
-            throw new RuntimeException("Incorrect format!");
+            throw new PhoneIncorrectFormatException("Incorrect format!");
         }
         repository.addPhone(name, phones);
     }

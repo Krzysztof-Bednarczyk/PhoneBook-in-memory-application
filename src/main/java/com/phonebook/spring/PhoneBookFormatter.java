@@ -101,8 +101,11 @@ public class PhoneBookFormatter {
             if (cause.getMessage().contains("No more phone numbers!")) {
                 throw new ContactRemovedException("Phone number removed! No more phone numbers for this contact! Contact removed!", cause);
             }
+            if (cause.getMessage().contains("Updated phone numbers!")) {
+                throw new ContactPhoneNumbersUpdatedException("Contact phone numbers updated!", cause);
+            }
 
-        } catch (ContactRemovedException e) {
+        } catch (ContactRemovedException | ContactPhoneNumbersUpdatedException e) {
             info(e.getMessage());
         } catch (Exception e) {
             error(e.getMessage());

@@ -1,11 +1,11 @@
 package com.phonebook.spring;
 
 import com.phonebook.exception.ContactNotFoundException;
+import com.phonebook.exception.ContactPhoneNumbersUpdatedException;
 import com.phonebook.exception.ContactRemovedException;
 import com.phonebook.main.InMemoryRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.management.relation.RoleInfoNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -61,7 +61,11 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
 
     @Override
     public void addPhone(String name, Set<String> phones) {
-        this.data.put(name, phones);
+        Optional<Set<String>> phoneSet = Optional.ofNullable(this.data.get(name));
+        phoneSet.ifPresentOrElse(strings -> {
+            strings.addAll(phones);
+            throw new ContactPhoneNumbersUpdatedException("Updated phone numbers!");
+        }, () -> this.data.put(name, phones));
     }
 
     @Override
@@ -69,7 +73,7 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
         String name = findNameByPhone(phone);
         Set<String> phoneSet = this.data.get(name);
         phoneSet.remove(phone);
-        if(phoneSet.isEmpty()){
+        if (phoneSet.isEmpty()) {
             this.data.remove(name);
             throw new ContactRemovedException("No more phone numbers!");
         }
@@ -77,7 +81,7 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
 
     @Override
     public void removeContact(String name) throws IllegalArgumentException {
-        if(this.data.get(name) == null) throw new ContactNotFoundException("No contact!");
+        if (this.data.get(name) == null) throw new ContactNotFoundException("No contact!");
         this.data.remove(name);
     }
 }
