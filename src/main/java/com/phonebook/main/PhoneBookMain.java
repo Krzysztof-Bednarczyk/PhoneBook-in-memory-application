@@ -54,6 +54,10 @@ public class PhoneBookMain {
                     String phone = line.substring(13);
                     phoneBook.removePhone(phone);
                     renderer.info("Phone number removed!");
+                } else if (line.startsWith("REMOVE_CONTACT")) {
+                    String name = line.substring(15);
+                    phoneBook.removeContact(name);
+                    renderer.info("Contact removed!");
                 } else {
                     throw new IncorrectCommandException("Incorrect Command!");
                 }

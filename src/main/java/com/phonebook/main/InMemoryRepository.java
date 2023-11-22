@@ -39,4 +39,12 @@ public interface InMemoryRepository {
      * @throws IllegalArgumentException if there is no such phone in repo
      */
     void removePhone(String phone) throws IllegalArgumentException;
+
+    /**
+     * removes a contact and all it's phone numbers from memory
+     *
+     * @param name
+     * @throws IllegalArgumentException
+     */
+    void removeContact(String name) throws IllegalArgumentException;
 }

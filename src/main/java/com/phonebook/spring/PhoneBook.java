@@ -66,4 +66,8 @@ public class PhoneBook {
     public void removePhone(String phone) {
         repository.removePhone(phone);
     }
+
+    public void removeContact(String name) {
+        repository.removeContact(name);
+    }
 }

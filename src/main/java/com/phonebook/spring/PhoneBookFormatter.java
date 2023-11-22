@@ -86,7 +86,7 @@ public class PhoneBookFormatter {
             if (cause.getMessage().contains("Incorrect Command!")) {
                 throw new IncorrectCommandException("Incorrect command! Please try again :)", cause);
             }
-            if (cause.getMessage().contains("phones")) {
+            if (cause.getMessage().contains("phones") || cause.getMessage().contains("No contact!")) {
                 throw new ContactNotFoundException("No contact like this in our phonebook!", cause);
             }
             if (cause.getMessage().contains("ERROR")) {

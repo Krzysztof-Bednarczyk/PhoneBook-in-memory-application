@@ -1,5 +1,6 @@
 package com.phonebook.spring;
 
+import com.phonebook.exception.ContactNotFoundException;
 import com.phonebook.exception.ContactRemovedException;
 import com.phonebook.main.InMemoryRepository;
 import org.springframework.stereotype.Repository;
@@ -72,5 +73,11 @@ public class InMemoryRepositoryIml implements InMemoryRepository {
             this.data.remove(name);
             throw new ContactRemovedException("No more phone numbers!");
         }
+    }
+
+    @Override
+    public void removeContact(String name) throws IllegalArgumentException {
+        if(this.data.get(name) == null) throw new ContactNotFoundException("No contact!");
+        this.data.remove(name);
     }
 }
